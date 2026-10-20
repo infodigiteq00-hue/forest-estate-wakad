@@ -178,7 +178,7 @@ header button{padding:9px 14px!important;font-size:12px!important}
     <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(34px,3.6vw,54px);line-height:1.1;margin:0 0 14px">Request a call back</h2>
     <p style="font-size:17px;color:#4f4f4c;margin:0 0 48px">Pre-launch EOI of ₹4.50 Lakhs, 100% refundable. Book a priority slot with our team.</p>
     <sc-if value="{{ inlineSent }}" hint-placeholder-val="{{ false }}">
-      <div style="font-size:20px;line-height:1.6;padding:24px 0">Thank you, {{ inlineName }}. We will call you within one working day.</div>
+      <div style="font-size:20px;line-height:1.6;padding:24px 0">Thank you, {{ inlineName }}. We will call you as soon as possible.</div>
     </sc-if>
     <sc-if value="{{ inlineOpen }}" hint-placeholder-val="{{ true }}">
       <form onSubmit="{{ submitInline }}" noValidate="{{ true }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px 32px;text-align:left">
@@ -418,7 +418,7 @@ class Component extends DCLogic {
       { type: '3.5 Bed Residence', area: '1,450 - 1,500 sq.ft.', price: '₹2.80 Cr*' }
     ];
     const M = {
-      enquire: ['Enquire', 'Share your details for pre-launch EOI and availability.', 'Submit', 'Our sales team will call you within one working day.'],
+      enquire: ['Enquire', 'Share your details for pre-launch EOI and availability.', 'Submit', 'Our sales team will call you as soon as possible.'],
       brochure: ['Download brochure', 'We will send the project brochure to your mobile and email.', 'Send brochure', 'The brochure is on its way to your mobile.'],
       call: ['Request a call', 'Leave your number and a relationship manager will call you back.', 'Call me back', 'A relationship manager will call you shortly.'],
       visit: ['Book a priority slot', 'Schedule a priority slot to experience the project at Kasturi Chowk, Wakad.', 'Book my slot', 'We will call you to confirm your priority slot.'],
