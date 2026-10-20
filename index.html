@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>window.__resources={}</script>
+<script>window.__resources={};window.LEADS_URL='';</script>
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
@@ -400,6 +400,12 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this.onKey);
     this.io && this.io.disconnect();
   }
+  lead(d) {
+    const url = window.LEADS_URL;
+    if (!url) return;
+    const body = JSON.stringify({ ...d, page: location.href });
+    try { fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body, keepalive: true }).catch(() => {}); } catch (e) {}
+  }
   validate(f) {
     const e = {};
     if (!f.name.trim()) e.name = 'Please enter your name';
@@ -459,7 +465,7 @@ class Component extends DCLogic {
       sendChat: e => { e.preventDefault(); const t = s.chatText.trim(); if (!t) return; this.setState({ chatText: '' });
         const d = t.replace(/\D/g, '');
         if (/locat|where|map|address|direction|reach/i.test(t) && this.locBot) this.say(t, this.locBot);
-        else if (/^[6-9]\d{9}$/.test(d)) this.say(t, { title: 'Thank you', text: 'Our relationship manager will call you on +91 ' + d + ' shortly.' });
+        else if (/^[6-9]\d{9}$/.test(d)) this.lead({ form: 'Vana chat', phone: d, message: t }), this.say(t, { title: 'Thank you', text: 'Our relationship manager will call you on +91 ' + d + ' shortly.' });
         else this.say(t, { text: 'Thanks for your question. A relationship manager can answer this in detail. Pick an option below or share your mobile number.', cta: 'Request a call back', action: 'chat-call' }); },
       hdrBg: solid ? 'rgba(250,250,249,0.97)' : 'transparent',
       hdrLine: solid ? '#e3e3df' : 'transparent',
@@ -491,14 +497,14 @@ class Component extends DCLogic {
       ],
       inline: s.inline, inlineErr: s.inlineErr, inlineSent: s.inlineSent, inlineOpen: !s.inlineSent, inlineName: s.inline.name.split(' ')[0],
       inlineName_: setI('name'), inlinePhone_: setI('phone'), inlineConfig_: setI('config'),
-      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); this.setState({ inlineErr: er, inlineSent: !Object.keys(er).length }); },
+      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); const ok = !Object.keys(er).length; if (ok) this.lead({ form: 'Contact form', name: s.inline.name, phone: s.inline.phone, config: s.inline.config }); this.setState({ inlineErr: er, inlineSent: ok }); },
       openEnquire: () => this.open('enquire'), openBrochure: () => this.open('brochure'), openCall: () => this.open('call'), openVisit: () => this.open('visit'),
       closeModal: () => this.setState({ modal: null }), stop: e => e.stopPropagation(),
       modalOpen: !!s.modal, modalSent: s.modalSent, modalForm: !s.modalSent,
       modalTitle: M[0], modalSub: M[1], modalCta: M[2], modalThanks: M[3], modalName: s.mform.name.split(' ')[0],
       modal: s.mform, modalErr: s.modalErr,
       modalName_: setM('name'), modalPhone_: setM('phone'), modalEmail_: setM('email'),
-      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); this.setState({ modalErr: er, modalSent: !Object.keys(er).length }); }
+      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); const ok = !Object.keys(er).length; if (ok) this.lead({ form: M[0], name: s.mform.name, phone: s.mform.phone, email: s.mform.email, config: s.modal === 'plan' || s.modal === 'breakup' ? s.planType : '' }); this.setState({ modalErr: er, modalSent: ok }); }
     };
   }
 }
