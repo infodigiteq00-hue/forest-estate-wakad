@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>window.__resources={};window.LEADS_URL='https://script.google.com/macros/s/AKfycbx-0K0nQDVzoCsxI9fRPpVvNcG8wpWXImnPyn5rQNV0r8nw_ov8ZGM2RlkuubOpZuP-/exec';</script>
+<script>window.__resources={};window.LEADS_URL='https://script.google.com/macros/s/AKfycbx-0K0nQDVzoCsxI9fRPpVvNcG8wpWXImnPyn5rQNV0r8nw_ov8ZGM2RlkuubOpZuP-/exec';window.LEADS_PROJECT='Lodha Wakad - The Living Forest Estate';</script>
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
@@ -403,7 +403,7 @@ class Component extends DCLogic {
   lead(d) {
     const url = window.LEADS_URL;
     if (!url) return;
-    const body = JSON.stringify({ ...d, page: location.href });
+    const body = JSON.stringify({ project: window.LEADS_PROJECT || document.title, ...d, page: location.href });
     try { fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body, keepalive: true }).catch(() => {}); } catch (e) {}
   }
   validate(f) {
