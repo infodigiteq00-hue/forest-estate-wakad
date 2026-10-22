@@ -390,6 +390,16 @@ class Component extends DCLogic {
     window.addEventListener('resize', this.onResize);
     this.onKey = e => { if (e.key === 'Escape') this.setState({ modal: null }); };
     window.addEventListener('keydown', this.onKey);
+    this.onHubScroll = () => {
+      const h = [...document.querySelectorAll('h2')].find(x => x.textContent.trim() === 'Residences');
+      if (!h) return;
+      const r = h.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight * 0.7) {
+        window.removeEventListener('scroll', this.onHubScroll);
+        if (!this.state.chat && !this.state.modal) this.setState(st => ({ chat: true, greet: false, msgs: st.msgs || this.welcome(), mood: 'happy' }));
+      }
+    };
+    window.addEventListener('scroll', this.onHubScroll, { passive: true });
     if (this.sentinel.current) {
       this.io = new IntersectionObserver(([en]) => this.setState({ solid: en.boundingClientRect.top < 80 }), { rootMargin: '-80px 0px 0px 0px', threshold: [0, 1] });
       this.io.observe(this.sentinel.current);
