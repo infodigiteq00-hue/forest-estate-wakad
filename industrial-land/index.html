@@ -191,11 +191,21 @@ button[aria-label="Chat with Vana"]{transform:scale(.7);transform-origin:bottom 
           <input value="{{ inline.phone }}" onChange="{{ inlinePhone_ }}" inputMode="numeric" maxLength="10" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0" style-focus="border-bottom-color:#1c1c1b">
           <span style="font-size:14px;color:#a12d22;letter-spacing:0;text-transform:none">{{ inlineErr.phone }}</span>
         </label>
-        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Plot size
-          <select value="{{ inline.size }}" onChange="{{ inlineSize_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none">
-            <option>Up to 1 biggah</option><option>1 to 5 biggah</option><option>5+ biggah</option>
-          </select>
-        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Email (optional)
+            <input value="{{ inline.email }}" onChange="{{ inlineEmail_ }}" type="email" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none" style-focus="border-bottom-color:#1c1c1b">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Property requirement
+            <select value="{{ inline.config }}" onChange="{{ inlineConfig_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Industrial land</option><option>Industrial land with existing building</option><option>Warehouse / Factory property</option><option>Exploring investment options</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Location
+            <select value="{{ inline.location }}" onChange="{{ inlineLocation_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Panoli GIDC</option><option>Ankleshwar GIDC</option><option>Jhagadia GIDC</option><option>Open to multiple locations</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Budget
+            <select value="{{ inline.budget }}" onChange="{{ inlineBudget_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Below ₹50 lakh</option><option>₹50 lakh – ₹1 crore</option><option>₹1 crore – ₹3 crore</option><option>₹3 crore – ₹5 crore</option><option>Above ₹5 crore</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Planning to purchase
+            <select value="{{ inline.timeline }}" onChange="{{ inlineTimeline_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Immediately / Within 30 days</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>Just researching</option></select>
+          </label>
         <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:12px">
           <button type="submit" style="background:#1c1c1b;color:#fafaf9;border:none;padding:18px 44px;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:background .25s" style-hover="background:#3a3a38" style-active="transform:scale(0.98)">Submit</button>
           <p style="margin:0;font-size:13px;color:#6b6b67;text-align:center">By submitting, you agree to be contacted by phone, SMS or WhatsApp about this project.</p>
@@ -244,8 +254,20 @@ button[aria-label="Chat with Vana"]{transform:scale(.7);transform-origin:bottom 
             <input value="{{ modal.phone }}" onChange="{{ modalPhone_ }}" inputMode="numeric" maxLength="10" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0" style-focus="border-bottom-color:#1c1c1b">
             <span style="font-size:14px;color:#a12d22;letter-spacing:0;text-transform:none">{{ modalErr.phone }}</span>
           </label>
-          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Company (optional)
-            <input value="{{ modal.company }}" onChange="{{ modalCompany_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none" style-focus="border-bottom-color:#1c1c1b">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Email (optional)
+            <input value="{{ modal.email }}" onChange="{{ modalEmail_ }}" type="email" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none" style-focus="border-bottom-color:#1c1c1b">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Property requirement
+            <select value="{{ modal.config }}" onChange="{{ modalConfig_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Industrial land</option><option>Industrial land with existing building</option><option>Warehouse / Factory property</option><option>Exploring investment options</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Location
+            <select value="{{ modal.location }}" onChange="{{ modalLocation_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Panoli GIDC</option><option>Ankleshwar GIDC</option><option>Jhagadia GIDC</option><option>Open to multiple locations</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Budget
+            <select value="{{ modal.budget }}" onChange="{{ modalBudget_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Below ₹50 lakh</option><option>₹50 lakh – ₹1 crore</option><option>₹1 crore – ₹3 crore</option><option>₹3 crore – ₹5 crore</option><option>Above ₹5 crore</option></select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4f4f4c">Planning to purchase
+            <select value="{{ modal.timeline }}" onChange="{{ modalTimeline_ }}" style="padding:12px 0;border:none;border-bottom:1px solid #8a8a86;background:transparent;font-size:18px;color:#1c1c1b;outline:none;letter-spacing:0;text-transform:none"><option value="">Select</option><option>Immediately / Within 30 days</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>Just researching</option></select>
           </label>
           <button type="submit" style="margin-top:8px;background:#1c1c1b;color:#fafaf9;border:none;padding:18px;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:background .25s" style-hover="background:#3a3a38" style-active="transform:scale(0.99)">{{ modalCta }}</button>
         </form>
@@ -376,8 +398,8 @@ class Component extends DCLogic {
   }
   componentDidUpdate() { const el = this.chatScroll.current; if (el) el.scrollTop = el.scrollHeight; }
   state = { w: typeof window !== 'undefined' ? window.innerWidth : 1440, solid: false, am: 0,
-    inline: { name: '', phone: '', size: 'Up to 1 biggah' }, inlineErr: {}, inlineSent: false,
-    chat: false, msgs: null, typing: false, mood: 'idle', lMood: 'idle', greet: false, chatMenu: true, chatText: '', modal: null, plotType: '', mform: { name: '', phone: '', company: '' }, modalErr: {}, modalSent: false };
+    inline: { name: '', phone: '', email: '', config: '', budget: '', timeline: '', location: '' }, inlineErr: {}, inlineSent: false,
+    chat: false, msgs: null, typing: false, mood: 'idle', lMood: 'idle', greet: false, chatMenu: true, chatText: '', modal: null, plotType: '', mform: { name: '', phone: '', email: '', config: '', budget: '', timeline: '', location: '' }, modalErr: {}, modalSent: false };
   componentDidMount() {
     this.onMove = ev => document.querySelectorAll('[data-bot-eyes]').forEach(el => { const r = el.getBoundingClientRect(); const dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2); const d = Math.hypot(dx, dy) || 1; const m = Math.min(1, d / 260) * +el.dataset.botEyes; el.style.transform = 'translate(' + (dx / d * m).toFixed(1) + 'px,' + (dy / d * m).toFixed(1) + 'px)'; });
     window.addEventListener('mousemove', this.onMove);
@@ -483,14 +505,14 @@ class Component extends DCLogic {
         { place: 'Ankleshwar GIDC', time: '15 min' }
       ],
       inline: s.inline, inlineErr: s.inlineErr, inlineSent: s.inlineSent, inlineOpen: !s.inlineSent, inlineName: s.inline.name.split(' ')[0],
-      inlineName_: setI('name'), inlinePhone_: setI('phone'), inlineSize_: setI('size'),
-      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); const ok = !Object.keys(er).length; if (ok) this.lead({ form: 'Contact form', name: s.inline.name, phone: s.inline.phone, config: s.inline.size }); this.setState({ inlineErr: er, inlineSent: ok }); },
+      inlineName_: setI('name'), inlinePhone_: setI('phone'), inlineEmail_: setI('email'), inlineConfig_: setI('config'), inlineBudget_: setI('budget'), inlineTimeline_: setI('timeline'), inlineLocation_: setI('location'),
+      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); const ok = !Object.keys(er).length; if (ok) this.lead({ form: 'Contact form', name: s.inline.name, phone: s.inline.phone, email: s.inline.email, config: s.inline.config, location: s.inline.location, budget: s.inline.budget, timeline: s.inline.timeline }); this.setState({ inlineErr: er, inlineSent: ok }); },
       openEnquire: () => this.open('enquire'), openBrochure: () => this.open('brochure'), openCall: () => this.open('call'), openVisit: () => this.open('visit'),
       closeModal: () => this.setState({ modal: null }), stop: e => e.stopPropagation(),
       modalOpen: !!s.modal, modalSent: s.modalSent, modalForm: !s.modalSent,
       modalTitle: M[0], modalSub: M[1], modalCta: M[2], modalThanks: M[3], modalName: s.mform.name.split(' ')[0],
-      modal: s.mform, modalErr: s.modalErr, modalName_: setM('name'), modalPhone_: setM('phone'), modalCompany_: setM('company'),
-      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); const ok = !Object.keys(er).length; if (ok) this.lead({ form: M[0], name: s.mform.name, phone: s.mform.phone, message: s.mform.company ? 'Company: ' + s.mform.company : '', config: s.modal === 'plan' || s.modal === 'breakup' ? s.plotType : '' }); this.setState({ modalErr: er, modalSent: ok }); }
+      modal: s.mform, modalErr: s.modalErr, modalName_: setM('name'), modalPhone_: setM('phone'), modalEmail_: setM('email'), modalConfig_: setM('config'), modalBudget_: setM('budget'), modalTimeline_: setM('timeline'), modalLocation_: setM('location'),
+      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); const ok = !Object.keys(er).length; if (ok) this.lead({ form: M[0], name: s.mform.name, phone: s.mform.phone, email: s.mform.email, config: s.mform.config || (s.modal === 'plan' || s.modal === 'breakup' ? s.plotType : ''), location: s.mform.location, budget: s.mform.budget, timeline: s.mform.timeline }); this.setState({ modalErr: er, modalSent: ok }); }
     };
   }
 }
