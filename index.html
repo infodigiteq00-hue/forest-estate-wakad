@@ -3,6 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lodha Wakad | The Living Forest Estate</title>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1661429198942811');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1661429198942811&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <script>window.__resources={};window.LEADS_URL='https://script.google.com/macros/s/AKfycbx-0K0nQDVzoCsxI9fRPpVvNcG8wpWXImnPyn5rQNV0r8nw_ov8ZGM2RlkuubOpZuP-/exec';window.LEADS_PROJECT='Lodha Wakad - The Living Forest Estate';</script>
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
@@ -434,6 +452,7 @@ class Component extends DCLogic {
     this.io && this.io.disconnect();
   }
   lead(d) {
+    try { if (window.fbq) window.fbq('track', 'Lead', { content_name: window.LEADS_PROJECT, content_category: d.form }); } catch (e) {}
     const url = window.LEADS_URL;
     if (!url) return;
     const body = JSON.stringify({ project: window.LEADS_PROJECT || document.title, ...d, page: location.href });
