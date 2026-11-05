@@ -89,7 +89,7 @@ button[aria-label="Chat with Vana"]{transform:scale(.7);transform-origin:bottom 
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,19,0.55) 0%,rgba(20,20,19,0.25) 22%,rgba(20,20,19,0.45) 42%,rgba(20,20,19,0.88) 100%);pointer-events:none"></div>
   <div style="position:absolute;left:0;right:0;bottom:12%;text-align:center;color:#fafaf9;padding:0 24px;pointer-events:none;text-shadow:0 1px 14px rgba(0,0,0,0.45)">
         <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(46px,6.6vw,100px);line-height:1;margin:0 0 22px;letter-spacing:0.01em">Industrial land for a bigger tomorrow</h1>
-    <p style="font-size:20px;font-weight:300;margin:0 auto 34px;max-width:42ch;line-height:1.55">Industrial plots from ₹299 - ₹499 per sq.ft., just 2 minutes from NH 48.</p>
+    <p style="font-size:20px;font-weight:300;margin:0 auto 34px;max-width:42ch;line-height:1.55">Industrial plots from ₹299 - ₹1,500 per sq.ft., just 2 minutes from NH 48.</p>
     <button onClick="{{ openEnquire }}" style="pointer-events:auto;background:#fafaf9;color:#1c1c1b;border:none;padding:17px 34px;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .25s" style-hover="background:#e6e6e2" style-active="transform:scale(0.98)">Contact us</button>
   </div>
 </section>
@@ -126,7 +126,7 @@ button[aria-label="Chat with Vana"]{transform:scale(.7);transform-origin:bottom 
         </div>
       </sc-for>
     </div>
-    <p style="text-align:center;margin:40px 0 0;font-size:15px;color:#4f4f4c">Multiple plots of every size available in each location, at ₹299 - ₹499 per sq.ft. Book a site visit to walk the plots with our team.</p>
+    <p style="text-align:center;margin:40px 0 0;font-size:15px;color:#4f4f4c">Multiple plots of every size available in each location, at ₹299 - ₹1,500 per sq.ft. Book a site visit to walk the plots with our team.</p>
   </div>
 </section>
 
@@ -509,7 +509,7 @@ class Component extends DCLogic {
         { value: 'NA', label: 'Land type' },
         { value: '2 min', label: 'To NH 48' },
                 { value: '12 min', label: 'Delhi-Mumbai Expressway' },
-        { value: showPrices ? '₹299 - ₹499' : 'On request', label: 'Per sq.ft.' }
+        { value: showPrices ? '₹299 - ₹1,500' : 'On request', label: 'Per sq.ft.' }
       ],
       plots: plots.map(p => ({ ...p, priceShown: showPrices ? p.price : 'Price on request', onBreakup: () => this.open('breakup', { plotType: p.type }), onPlan: () => this.open('plan', { plotType: p.type }) })),
       features: ['Clear, marketable 7/12 title', 'NA conversion completed', 'Free zone industrial land', 'Title search report available', 'Immediate registration and possession', 'Bank loan assistance'],
