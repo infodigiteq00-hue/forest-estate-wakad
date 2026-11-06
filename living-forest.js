@@ -48,7 +48,7 @@
     constructor(props) {
       super(props);
       this.state = { step: 1, name: '', phone: props.initialPhone || '', answers: {}, whatsapp_opt_in: true, busy: false, error: '' };
-      this.leadId = id(); this.leadEvent = id(); this.qualifiedEvent = id(); this.detailEvent = id();
+      this.leadId = id(); this.leadEvent = id(); this.qualifiedEvent = id(); this.detailEvent = id(); this.budgetLeadEvent = id();
     }
     async submit(event) {
       event.preventDefault();
@@ -60,7 +60,7 @@
       // A retry keeps its IDs; edited details become a new request.
       const identity = s.name.trim() + ':' + s.phone;
       if (step === 1 && this.captureIdentity && this.captureIdentity !== identity) {
-        this.leadId = id(); this.leadEvent = id();
+        this.leadId = id(); this.leadEvent = id(); this.budgetLeadEvent = id();
       }
       if (step === 1) this.captureIdentity = identity;
       const preferences = JSON.stringify([s.answers, s.whatsapp_opt_in]);
@@ -69,10 +69,12 @@
       this.pending = true; this.setState({ busy: true, error: '' });
       try {
         const result = await save({ action: step === 1 ? 'capture' : 'qualify', lead_id: this.leadId,
-          event_id: step === 1 ? this.leadEvent : this.detailEvent, qualified_event_id: this.qualifiedEvent,
+          event_id: step === 1 ? this.leadEvent : this.detailEvent, qualified_event_id: this.qualifiedEvent, budget_lead_event_id: this.budgetLeadEvent,
           form: this.props.form, name: s.name.trim(), phone: s.phone, email: '', config: '', message: '', location: '', budget: '', timeline: '', visit: '', ...s.answers, whatsapp_opt_in: s.whatsapp_opt_in });
         this.leadId = result.lead_id;
-        if (step === 1 && result.track_lead) pixel('Lead', result.event_id);
+        // Ads optimise on Lead, so it only fires once step 2 shows a budget that fits. Step 1 is reporting only.
+        if (step === 1 && result.track_lead) pixel('Step1Lead', result.event_id, true);
+        if (step === 2 && result.budget_lead_event_id) pixel('Lead', result.budget_lead_event_id);
         if (step === 2 && result.track_qualified && qualifies(s.answers)) pixel('QualifiedLead', result.event_id, true);
         this.setState({ step: step + 1 });
       } catch (err) { this.setState({ error: err.message }); }
