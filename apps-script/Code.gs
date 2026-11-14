@@ -6,7 +6,7 @@
 const DEFAULT_SHEET = 'Leads';
 // Projects whose name starts with the key go to that tab; everything else goes to DEFAULT_SHEET.
 const SHEET_BY_PROJECT = { 'The Industrial Land': 'Sheet1' };
-const HEADERS = ['Date & time', 'Project', 'Form', 'Name', 'Mobile', 'Email', 'Configuration', 'Message', 'Location', 'Budget', 'Timeline', 'Site visit', 'Page', 'Lead ID', 'Purpose', 'Current home', 'WhatsApp opt-in', 'WhatsApp consent recorded at', 'Lead event ID', 'QualifiedLead event ID', 'Preferences event ID', 'Budget Lead event ID'];
+const HEADERS = ['Date & time', 'Project', 'Form', 'Name', 'Mobile', 'Email', 'Configuration', 'Message', 'Location', 'Budget', 'Timeline', 'Site visit', 'Page', 'Lead ID', 'Purpose', 'Current home', 'WhatsApp opt-in', 'WhatsApp consent recorded at', 'Lead event ID', 'QualifiedLead event ID', 'Preferences event ID'];
 const LEGACY_COLUMN_COUNT = 13; // Existing sheet/CRM field positions must stay stable.
 const META_PIXEL_ID = '1468969448526553';
 const META_GRAPH_VERSION = 'v23.0';
@@ -72,12 +72,10 @@ function clean_(v) {
   return String(v == null ? '' : v).slice(0, 500).replace(/^[=+\-@]/, "'$&");
 }
 function validId_(v) { return /^[a-zA-Z0-9-]{16,100}$/.test(String(v || '')); }
+// QualifiedLead: a budget of Rs 2 Cr or more (the one-page form no longer asks for a timeline).
 function qualified_(d) {
-  return ['Rs 2–2.5 Cr', 'Rs 2.5–3 Cr', 'Rs 3 Cr+'].indexOf(d.budget) >= 0 &&
-    ['Immediately', '1–3 months', '3–6 months'].indexOf(d.timeline) >= 0;
+  return ['Rs 2–2.5 Cr', 'Rs 2.5–3 Cr', 'Rs 3 Cr+'].indexOf(d.budget) >= 0;
 }
-// Lead is what the ads optimise on, so it only fires when step 2 shows a budget of Rs 2 Cr or more.
-function budgetFits_(d) { return ['Rs 2–2.5 Cr', 'Rs 2.5–3 Cr', 'Rs 3 Cr+'].indexOf(d.budget) >= 0; }
 function saveLead_(d) {
   const modern = d.action === 'capture' || d.action === 'qualify';
   if (d.action && !modern) throw new Error('Unknown action');
@@ -96,7 +94,7 @@ function saveLead_(d) {
     index = byId;
     const row = rows[index];
     // Replayed requests acknowledge the original event, without repeating side effects.
-    if (row[20] === d.event_id) return { result: { ok: true, lead_id: row[13], event_id: row[19] || d.event_id, track_qualified: !!row[19], budget_lead_event_id: row[21] || '' } };
+    if (row[20] === d.event_id) return { result: { ok: true, lead_id: row[13], event_id: row[19] || d.event_id, track_qualified: !!row[19] } };
     ['config', 'location', 'budget', 'timeline', 'visit', 'purpose', 'current_home'].forEach((key, i) => {
       row[[6, 8, 9, 10, 11, 14, 15][i]] = clean_(d[key]);
     });
@@ -104,30 +102,29 @@ function saveLead_(d) {
     row[17] = row[16] ? (row[17] || new Date()) : '';
     const qualifies = qualified_(d), firstQualified = qualifies && !row[19];
     if (firstQualified) row[19] = d.qualified_event_id;
-    const firstBudgetLead = budgetFits_(d) && !row[21] && validId_(d.budget_lead_event_id);
-    if (firstBudgetLead) row[21] = d.budget_lead_event_id;
     row[20] = d.event_id;
     sh.getRange(index + 2, 1, 1, HEADERS.length).setValues([row]);
     SpreadsheetApp.flush();
     // Use stored identity/source fields, never replace the original name/mobile.
     const data = Object.assign({}, d, { name: String(row[3]).replace(/^'/, ''), phone: digits_(row[4]), project: String(row[1]).replace(/^'/, ''), form: String(row[2]).replace(/^'/, ''), page: String(row[12]).replace(/^'/, '') });
-    const metaEvents = [];
-    if (firstBudgetLead) metaEvents.push(['Lead', row[21]]);
-    if (firstQualified) metaEvents.push(['QualifiedLead', row[19]]);
-    return { result: { ok: true, lead_id: row[13], event_id: row[19] || d.event_id, track_qualified: firstQualified, budget_lead_event_id: firstBudgetLead ? row[21] : '' }, data: data, metaEvents: metaEvents };
+    return { result: { ok: true, lead_id: row[13], event_id: row[19] || d.event_id, track_qualified: firstQualified }, data: data, metaEvents: firstQualified ? [['QualifiedLead', row[19]]] : [] };
   }
   if (index >= 0) {
     const row = rows[index];
     if (modern && !row[13]) { row[13] = d.lead_id; sh.getRange(index + 2, 1, 1, HEADERS.length).setValues([row]); SpreadsheetApp.flush(); }
-    return { result: { ok: true, duplicate: true, lead_id: row[13], event_id: row[18] || d.event_id, track_lead: modern && row[18] === d.event_id } };
+    const replay = modern && row[18] === d.event_id;
+    return { result: { ok: true, duplicate: true, lead_id: row[13], event_id: row[18] || d.event_id, track_lead: replay,
+      qualified_event_id: row[19] || '', track_qualified: replay && !!row[19] } };
   }
   const row = [new Date(), clean_(d.project), clean_(d.form), clean_(d.name), d.phone ? "'+91 " + phone : '',
     clean_(d.email), clean_(d.config), clean_(d.message), clean_(d.location), clean_(d.budget), clean_(d.timeline), clean_(d.visit), clean_(d.page),
-    modern ? d.lead_id : Utilities.getUuid(), clean_(d.purpose), clean_(d.current_home), modern && d.whatsapp_opt_in === true, modern && d.whatsapp_opt_in === true ? new Date() : '', modern ? d.event_id : '', '', '', ''];
+    modern ? d.lead_id : Utilities.getUuid(), clean_(d.purpose), clean_(d.current_home), modern && d.whatsapp_opt_in === true, modern && d.whatsapp_opt_in === true ? new Date() : '', modern ? d.event_id : '', modern && qualified_(d) && validId_(d.qualified_event_id) ? d.qualified_event_id : '', ''];
   sh.appendRow(row);
   SpreadsheetApp.flush();
-  return { result: { ok: true, lead_id: row[13], event_id: d.event_id, track_lead: modern },
-    newLead: true, row: row, sheetUrl: ss.getUrl(), data: d, metaEvents: modern ? [['Step1Lead', d.event_id]] : [] };
+  const metaEvents = modern ? [['Lead', d.event_id]] : [];
+  if (row[19]) metaEvents.push(['QualifiedLead', row[19]]);
+  return { result: { ok: true, lead_id: row[13], event_id: d.event_id, track_lead: modern, qualified_event_id: row[19], track_qualified: !!row[19] },
+    newLead: true, row: row, sheetUrl: ss.getUrl(), data: d, metaEvents: metaEvents };
 }
 
 // Only hashes leave Apps Script. Tokens are read at runtime, never stored in code.
