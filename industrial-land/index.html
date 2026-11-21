@@ -524,13 +524,13 @@ class Component extends DCLogic {
       ],
       inline: s.inline, inlineErr: s.inlineErr, inlineSent: s.inlineSent, inlineOpen: !s.inlineSent, inlineName: s.inline.name.split(' ')[0],
       inlineName_: setI('name'), inlinePhone_: setI('phone'), inlineEmail_: setI('email'), inlineConfig_: setI('config'), inlineBudget_: setI('budget'), inlineTimeline_: setI('timeline'), inlineLocation_: setI('location'),
-      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); const ok = !Object.keys(er).length; if (ok) this.lead({ form: 'Contact form', name: s.inline.name, phone: s.inline.phone, email: s.inline.email, config: s.inline.config, location: s.inline.location, budget: s.inline.budget, timeline: s.inline.timeline }); this.setState({ inlineErr: er, inlineSent: ok }); },
+      submitInline: e => { e.preventDefault(); const er = this.validate(s.inline); const ok = !Object.keys(er).length; if (ok) this.lead({ form: 'Contact form', name: s.inline.name, phone: s.inline.phone, email: s.inline.email, config: s.inline.config, location: s.inline.location, budget: s.inline.budget, timeline: s.inline.timeline }); if (ok) setTimeout(() => { location.href = 'thank-you/'; }, 700); this.setState({ inlineErr: er, inlineSent: ok }); },
       openEnquire: () => this.open('enquire'), openBrochure: () => this.open('brochure'), openCall: () => this.open('call'), openVisit: () => this.open('visit'),
       closeModal: () => this.setState({ modal: null }), stop: e => e.stopPropagation(),
       modalOpen: !!s.modal, modalSent: s.modalSent, modalForm: !s.modalSent,
       modalTitle: M[0], modalSub: M[1], modalCta: M[2], modalThanks: M[3], modalName: s.mform.name.split(' ')[0],
       modal: s.mform, modalErr: s.modalErr, modalName_: setM('name'), modalPhone_: setM('phone'), modalEmail_: setM('email'), modalConfig_: setM('config'), modalBudget_: setM('budget'), modalTimeline_: setM('timeline'), modalLocation_: setM('location'),
-      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); const ok = !Object.keys(er).length; if (ok) this.lead({ form: M[0], name: s.mform.name, phone: s.mform.phone, email: s.mform.email, config: s.mform.config || (s.modal === 'plan' || s.modal === 'breakup' ? s.plotType : ''), location: s.mform.location, budget: s.mform.budget, timeline: s.mform.timeline }); this.setState({ modalErr: er, modalSent: ok }); }
+      submitModal: e => { e.preventDefault(); const er = this.validate(s.mform); const ok = !Object.keys(er).length; if (ok) this.lead({ form: M[0], name: s.mform.name, phone: s.mform.phone, email: s.mform.email, config: s.mform.config || (s.modal === 'plan' || s.modal === 'breakup' ? s.plotType : ''), location: s.mform.location, budget: s.mform.budget, timeline: s.mform.timeline }); if (ok) setTimeout(() => { location.href = 'thank-you/'; }, 700); this.setState({ modalErr: er, modalSent: ok }); }
     };
   }
 }

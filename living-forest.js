@@ -67,6 +67,8 @@
         if (result.track_lead) pixel('Lead', result.event_id);
         if (result.track_qualified && qualifies(s.answers)) pixel('QualifiedLead', result.qualified_event_id, true);
         this.setState({ done: true });
+        // Give the pixel request a moment to leave, then show the thank-you page.
+        setTimeout(() => { location.href = 'thank-you/'; }, 700);
       } catch (err) { this.setState({ error: err.message }); }
       finally { this.pending = false; this.setState({ busy: false }); }
     }
